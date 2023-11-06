@@ -14,13 +14,13 @@ const Navbar = () => {
       <li>
         <NavLink to={"/all-foods"}>All Foods</NavLink>
       </li>
-      <li>
-        <NavLink to={"/blogs"}>Blogs</NavLink>
-      </li>
     </>
   );
   const dynamicLinks = (
     <>
+      <li>
+        <NavLink to={"/blogs"}>Blogs</NavLink>
+      </li>
       <li>
         <Link to={"/login"}>Login</Link>
       </li>

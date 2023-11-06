@@ -4,6 +4,7 @@ import Footer from "../pages/shared/Footer/Footer";
 const MainLayout = () => {
   return (
     <div>
+      {/* Outlet is into the navbar */}
       <Navbar />
       <Footer />
     </div>
