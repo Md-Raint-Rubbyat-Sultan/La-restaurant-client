@@ -2,10 +2,11 @@ import { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import Spinner from "../components/Spinner/Spinner";
 import PropTypes from "prop-types";
+import { AuthContext } from "../providers/AuthProvider";
 
 const PrivetRoute = ({ children }) => {
   const { user, isLoading } = useContext();
-  const location = useLocation();
+  const location = useLocation(AuthContext);
 
   if (isLoading) return <Spinner />;
 
