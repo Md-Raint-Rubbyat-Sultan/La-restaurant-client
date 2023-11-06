@@ -2,6 +2,12 @@
 /* roboto */
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wght@8..144,400;8..144,500;8..144,600;8..144,700;8..144,800&display=swap");
 
+/* tailwind css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* custom global css */
+.btn-common {
+  @apply border-2 border-gray-300 hover:text-white hover:bg-black font-semibold text-lg rounded-lg;
+}

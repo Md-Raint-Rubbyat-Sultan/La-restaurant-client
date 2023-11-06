@@ -20,7 +20,7 @@ const useAxiosSucre = () => {
             error?.response?.status === 401 ||
             error?.response?.status === 403
           ) {
-            toast.error(error.message);
+            toast.error(error?.response?.message);
             console.log(error);
           }
         }

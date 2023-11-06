@@ -12,9 +12,7 @@ const PopularFoodCards = ({ food }) => {
         <p>Category: {category}</p>
         <p>Price: ${price}</p>
         <div className="card-actions justify-center">
-          <button className="border-2 border-gray-300 hover:text-white hover:bg-black mt-10 px-6 py-2 font-semibold text-lg rounded-lg">
-            Details
-          </button>
+          <button className="btn-common mt-10 px-6 py-2">Details</button>
         </div>
       </div>
     </div>
