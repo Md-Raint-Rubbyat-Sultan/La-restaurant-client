@@ -1,6 +1,19 @@
+import { useContext } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProvider";
+import { toast } from "react-hot-toast";
 
 const Navbar = () => {
+  const { user, logoutUser } = useContext(AuthContext);
+
+  const handelLogout = () => {
+    logoutUser()
+      .then(() => {
+        toast.success("Logged Out!");
+      })
+      .catch((err) => toast.error(err.message));
+  };
+
   const commonLinks = (
     <>
       <li>
@@ -16,15 +29,28 @@ const Navbar = () => {
       </li>
     </>
   );
+
   const dynamicLinks = (
     <>
       <li>
         <NavLink to={"/blogs"}>Blogs</NavLink>
       </li>
-      <li>
-        <Link to={"/login"}>Login</Link>
-      </li>
-      <li>{/* <button>avater</button> */}</li>
+      {user ? (
+        <>
+          <li>
+            <Link to={"/"}>
+              <button onClick={handelLogout}>Logout</button>
+            </Link>
+          </li>
+          <li>
+            <button>avater</button>
+          </li>
+        </>
+      ) : (
+        <li>
+          <Link to={"/login"}>Login</Link>
+        </li>
+      )}
     </>
   );
   return (
