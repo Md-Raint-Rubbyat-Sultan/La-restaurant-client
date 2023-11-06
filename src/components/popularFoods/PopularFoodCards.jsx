@@ -12,7 +12,7 @@ const PopularFoodCards = ({ food }) => {
         <p>Category: {category}</p>
         <p>Price: ${price}</p>
         <div className="card-actions justify-center">
-          <button className="btn-common mt-10 px-6 py-2">Details</button>
+          <button className="btn-card mt-10 px-6 py-2">Details</button>
         </div>
       </div>
     </div>

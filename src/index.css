@@ -8,8 +8,11 @@
 @tailwind utilities;
 
 /* custom global css */
-.btn-common {
+.btn-card {
   @apply border-2 border-gray-300 hover:text-white hover:bg-black font-semibold text-lg rounded-lg;
+}
+.btn-banner {
+  @apply border-2 border-gray-300 text-white bg-black hover:text-black hover:bg-transparent font-semibold text-lg rounded-lg;
 }
 
 .btn-form {

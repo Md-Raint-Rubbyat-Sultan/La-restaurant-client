@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { toast } from "react-hot-toast";
+import { AuthContext } from "../providers/AuthProvider";
 
 const url = axios.create({
   baseURL: "http://localhost:5000/api/v1",
@@ -8,6 +9,8 @@ const url = axios.create({
 });
 
 const useAxiosSucre = () => {
+  const { logoutUser } = useContext(AuthContext);
+
   useEffect(() => {
     let mount = true;
     if (mount) {
@@ -20,14 +23,23 @@ const useAxiosSucre = () => {
             error?.response?.status === 401 ||
             error?.response?.status === 403
           ) {
-            toast.error(error?.response?.message);
-            console.log(error);
+            logoutUser()
+              .then(() => {
+                if (error?.response?.status === 401) {
+                  return toast.error("Access denied, please login.");
+                }
+                if (error?.response?.status === 403) {
+                  return toast.error("Forbidden Access.");
+                }
+              })
+              .catch((er) => toast.error(er.message));
+            // console.log(error);
           }
         }
       );
     }
     return () => (mount = false);
-  }, []);
+  }, [logoutUser]);
   return url;
 };
 

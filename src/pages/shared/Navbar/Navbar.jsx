@@ -2,14 +2,23 @@ import { useContext } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { toast } from "react-hot-toast";
+import useAxiosSucre from "../../../hooks/useAxiosSucre";
 
 const Navbar = () => {
   const { user, logoutUser } = useContext(AuthContext);
+  const url = useAxiosSucre();
 
   const handelLogout = () => {
     logoutUser()
       .then(() => {
-        toast.success("Logged Out!");
+        url
+          .post("/logout", {})
+          .then((res) => {
+            if (res.data?.success) {
+              toast.success("Logged Out!");
+            }
+          })
+          .catch((er) => toast.error(er.message));
       })
       .catch((err) => toast.error(err.message));
   };

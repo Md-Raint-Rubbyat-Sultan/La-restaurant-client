@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   return (
@@ -22,10 +23,16 @@ const Banner = () => {
           />
         </figure>
       </motion.div>
-      <div className="absolute top-0 right-0 bottom-0 left-0 flex justify-center items-center">
+      <div className="absolute top-0 right-0 bottom-0 left-0 flex flex-col justify-center items-center gap-6">
         <h3 className="text-white text-5xl lg:text-7xl font-semibold">
           EAT WHAT <br /> YOU LOVE
         </h3>
+        <p className="text-white font-bold text-center">
+          THE FINEST INGREDIENTS FOR THE FINEST MOMENTS
+        </p>
+        <Link to={"/all-foods"}>
+          <button className="btn-banner px-6 py-2">ALL FOODS</button>
+        </Link>
       </div>
     </div>
   );

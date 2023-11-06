@@ -1,12 +1,18 @@
 import { useContext, useState } from "react";
 import eye from "../../assets/eye.svg";
 import eyeClose from "../../assets/eyeClose.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import { toast } from "react-hot-toast";
+import useAxiosSucre from "../../hooks/useAxiosSucre";
 
 const Register = () => {
   const [showPass, setShowPass] = useState(() => false);
-  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const { createUser, updateUserProfile, isLoading, setIsLoading } =
+    useContext(AuthContext);
+  const url = useAxiosSucre();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handelRegister = (e) => {
     e.preventDefault();
@@ -15,7 +21,46 @@ const Register = () => {
     const photo = form.photo.value;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(name, email, password, photo);
+    const profile = {
+      displayName: name,
+      photoURL: photo,
+    };
+
+    // console.log(email, password, profile);
+
+    createUser(email, password)
+      .then(() => {
+        updateUserProfile(profile)
+          .then(() => {
+            url
+              .post("/add-a-user", {
+                userName: name,
+                userEmail: email,
+                userPhotoUrl: photo,
+              })
+              .then((res) => {
+                if (res.data?.acknowledged) {
+                  url
+                    .post("/jwt", { name, email })
+                    .then((response) => {
+                      console.log(response);
+                      if (response.data?.success) {
+                        toast.success("Register Successful!");
+                        form.reset();
+                        navigate(location?.state || "/");
+                      }
+                    })
+                    .catch((er) => toast.error(er.message));
+                }
+              })
+              .catch((er) => toast.error(er.message));
+          })
+          .catch((er) => toast.error(er.message));
+      })
+      .catch((er) => toast.error(er.message))
+      .finally(() => {
+        setIsLoading(() => false);
+      });
   };
 
   return (
@@ -30,7 +75,10 @@ const Register = () => {
     >
       <div className="w-11/12 md:w-full md:max-w-2xl shadow-2xl border-2 backdrop-blur-sm border-gray-300 rounded-lg">
         <h3 className="text-center text-5xl text-white font-bold mt-6">
-          Register!
+          Register!{" "}
+          {isLoading && (
+            <span className="loading loading-spinner loading-md text-white font-bold"></span>
+          )}
         </h3>
         <form onSubmit={handelRegister} className="card-body">
           <div className="form-control">
@@ -108,7 +156,11 @@ const Register = () => {
         </form>
         <p className="text-center text-white mb-6">
           already have an account? Please{" "}
-          <Link className="text-lg text-red-400 underline" to={"/login"}>
+          <Link
+            state={location?.state}
+            className="text-lg text-red-400 underline"
+            to={"/login"}
+          >
             Login
           </Link>
         </p>
