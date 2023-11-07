@@ -28,6 +28,19 @@ const Register = () => {
 
     // console.log(email, password, profile);
 
+    // password validation
+    if (password.length < 6) {
+      return toast.error("password must contain at least 6 character.");
+    } else if (!/[A-Z]/.test(password)) {
+      return toast.error(
+        "password must contain at least one upper case character."
+      );
+    } else if (!/[@#$%^&-+=()]/.test(password)) {
+      return toast.error(
+        "password must contain at least one spacial character as ($, #, @, %, ^, & etc)."
+      );
+    }
+
     createUser(email, password)
       .then(() => {
         updateUserProfile(profile)
