@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, ScrollRestoration } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { toast } from "react-hot-toast";
 import useAxiosSucre from "../../../hooks/useAxiosSucre";
@@ -34,7 +34,12 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink to={"/all-foods"}>All Foods</NavLink>
+        <NavLink
+          to={"all-foods"}
+          className={({ isActive }) => (isActive ? "underline" : "")}
+        >
+          All Foods
+        </NavLink>
       </li>
     </>
   );
@@ -42,7 +47,12 @@ const Navbar = () => {
   const dynamicLinks = (
     <>
       <li>
-        <NavLink to={"/blogs"}>Blogs</NavLink>
+        <NavLink
+          to={"blogs"}
+          className={({ isActive }) => (isActive ? "underline" : "")}
+        >
+          Blogs
+        </NavLink>
       </li>
       {user ? (
         <>
@@ -52,7 +62,48 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <button>avater</button>
+            <div className="dropdown dropdown-end">
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 rounded-full">
+                  <img
+                    src={
+                      user?.photoURL
+                        ? user.photoURL
+                        : `https://i.ibb.co/jJf2wWF/user.png`
+                    }
+                  />
+                </div>
+              </label>
+              <ul
+                tabIndex={0}
+                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content left-0 lg:left-auto top-16 bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <NavLink
+                    to={"user/added-foods"}
+                    className={({ isActive }) => (isActive ? "underline" : "")}
+                  >
+                    My Added Food
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to={"user/added-food"}
+                    className={({ isActive }) => (isActive ? "underline" : "")}
+                  >
+                    Add A Food
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to={"user/added-food"}
+                    className={({ isActive }) => (isActive ? "underline" : "")}
+                  >
+                    My Cart
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
           </li>
         </>
       ) : (
@@ -95,12 +146,15 @@ const Navbar = () => {
             </div>
             <h1 className="text-5xl text-center py-10">Lá</h1>
             <div className="hidden lg:block">
-              <ul className="menu menu-horizontal text-lg">{dynamicLinks}</ul>
+              <ul className="menu menu-horizontal items-center text-lg">
+                {dynamicLinks}
+              </ul>
             </div>
           </div>
         </div>
         {/* Page content here */}
         <Outlet />
+        <ScrollRestoration />
       </div>
       <div className="drawer-side">
         <label

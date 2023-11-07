@@ -17,7 +17,7 @@ const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => null);
-  const [isLoading, setIsLoading] = useState(() => null);
+  const [isLoading, setIsLoading] = useState(() => true);
 
   const loginWithGoogle = () => {
     setIsLoading(() => true);

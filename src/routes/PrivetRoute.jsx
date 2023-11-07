@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 import { AuthContext } from "../providers/AuthProvider";
 
 const PrivetRoute = ({ children }) => {
-  const { user, isLoading } = useContext();
-  const location = useLocation(AuthContext);
+  const { user, isLoading } = useContext(AuthContext);
+  const location = useLocation();
 
   if (isLoading) return <Spinner />;
 
