@@ -57,7 +57,7 @@ const Register = () => {
                   url
                     .post("/jwt", { name, email })
                     .then((response) => {
-                      console.log(response);
+                      // console.log(response);
                       if (response.data?.success) {
                         toast.success("Register Successful!");
                         form.reset();

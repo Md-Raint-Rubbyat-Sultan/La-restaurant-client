@@ -21,7 +21,7 @@ const PopularFoods = () => {
 
   if (isError) return toast.error(error.message);
 
-  console.log(foods);
+  // console.log(foods);
 
   return (
     <div className="container mx-auto px-4 xl:px-0 my-28 xl:my-40 space-y-20">

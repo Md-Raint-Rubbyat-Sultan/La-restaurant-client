@@ -6,6 +6,7 @@ import useAxiosSucre from "../../hooks/useAxiosSucre";
 import { toast } from "react-hot-toast";
 import Spinner from "../../components/Spinner/Spinner";
 import MyAddedFoodCards from "../../components/MyaddedFoodCards/MyaddedFoodCards";
+import Swal from "sweetalert2";
 
 const MyAddedFoods = () => {
   const { user } = useContext(AuthContext);
@@ -17,6 +18,7 @@ const MyAddedFoods = () => {
     isError,
     error,
     data: addedFoods,
+    refetch,
   } = useQuery({
     queryKey: ["addedFoods", currentPage],
     queryFn: () =>
@@ -38,6 +40,35 @@ const MyAddedFoods = () => {
   const totalPages = [...Array(itemsPrePage).keys()];
   //   console.log(foodUserAdd, count, totalPages);
 
+  const handelFoodDelete = (id) => {
+    // console.log(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        url
+          .delete(`/user/delete-a-added-food/${id}`)
+          .then((res) => {
+            if (res.data?.result?.acknowledged) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+              refetch();
+            }
+          })
+          .catch((er) => toast.error(er.message));
+      }
+    });
+  };
+
   return (
     <div className="container mx-auto px-4 xl:px-0 space-y-12 mb-12">
       <HelmetTitle title="La | My Added Food" />
@@ -46,7 +77,11 @@ const MyAddedFoods = () => {
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
         {foodUserAdd?.map((addedFood) => (
-          <MyAddedFoodCards key={addedFood?._id} addedFood={addedFood} />
+          <MyAddedFoodCards
+            key={addedFood?._id}
+            addedFood={addedFood}
+            handelFoodDelete={handelFoodDelete}
+          />
         ))}
       </div>
       <div className="flex justify-center items-center flex-wrap gap-5">

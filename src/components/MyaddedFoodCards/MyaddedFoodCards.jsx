@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
-const MyAddedFoodCards = ({ addedFood }) => {
-  const { name, category, img, price, quantity } = addedFood;
+const MyAddedFoodCards = ({ addedFood, handelFoodDelete }) => {
+  const { _id, name, category, img, price, quantity } = addedFood;
 
   return (
     <div className="overflow-hidden bg-base-100 shadow-xl border-2 border-gray-300 rounded-lg">
@@ -15,7 +15,12 @@ const MyAddedFoodCards = ({ addedFood }) => {
         <p>Quantity: {quantity}</p>
         <div className="card-actions justify-center">
           <button className="btn-card mt-10 px-6 py-2">Update</button>
-          <button className="btn-card mt-10 px-6 py-2">Delete</button>
+          <button
+            onClick={() => handelFoodDelete(_id)}
+            className="btn-card mt-10 px-6 py-2"
+          >
+            Delete
+          </button>
         </div>
       </div>
     </div>
@@ -24,6 +29,7 @@ const MyAddedFoodCards = ({ addedFood }) => {
 
 MyAddedFoodCards.propTypes = {
   addedFood: PropTypes.object.isRequired,
+  handelFoodDelete: PropTypes.func,
 };
 
 export default MyAddedFoodCards;
