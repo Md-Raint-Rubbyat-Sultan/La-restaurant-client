@@ -45,7 +45,6 @@ const FoodDetails = () => {
     if (user?.email === userEmail)
       return toast.error("You can't order your own product!");
     navigate(`/food-orders/${_id}`);
-    toast.success("ordered");
   };
 
   return (

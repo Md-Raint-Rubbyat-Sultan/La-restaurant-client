@@ -96,7 +96,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <NavLink
-                    to={"user/added-food"}
+                    to={"user/cart"}
                     className={({ isActive }) => (isActive ? "underline" : "")}
                   >
                     My Cart

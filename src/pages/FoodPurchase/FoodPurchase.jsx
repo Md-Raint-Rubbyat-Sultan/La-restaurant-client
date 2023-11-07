@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxiosSucre from "../../hooks/useAxiosSucre";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../components/Spinner/Spinner";
@@ -8,16 +8,17 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const FoodPurchase = () => {
-  const { isLoading } = useContext(AuthContext);
+  const { user, isLoading } = useContext(AuthContext);
   const [quantityValue, setQuantityValue] = useState(() => 1);
   const id = useParams();
   const url = useAxiosSucre();
 
   //   set date
   const date = new Date();
-  const day = date.getDay();
+  const day = date.getDate();
   const month = date.getMonth();
   const year = date.getFullYear();
+  const navigate = useNavigate();
 
   const currentDate = `${day}/${month + 1}/${year}`;
 
@@ -38,19 +39,49 @@ const FoodPurchase = () => {
 
   //   console.log(foodDetails);
 
-  const {
-    _id,
-    category,
-    description,
-    img,
-    name,
-    origin,
-    quantity,
-    price,
-    userEmail,
-    userName,
-    orderCount,
-  } = foodDetails;
+  const { _id, name, quantity, price, orderCount } = foodDetails;
+
+  const handelOrderSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const addedQuantity = form.quantity.value;
+    const userName = form.user.value;
+    const addedTime = form.orderDate.value;
+
+    // post info
+    const orderInfo = {
+      orderId: _id,
+      user: userName,
+      email: user?.email,
+      addedQuantity,
+      addedTime,
+    };
+
+    // update info
+    const updatedInfo = {
+      quantity: quantity - addedQuantity,
+      orderCount: orderCount + parseInt(addedQuantity),
+    };
+
+    // console.log(orderInfo, updatedInfo);
+
+    url
+      .post("/food-orders", orderInfo)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data?.acknowledged) {
+          url
+            .patch(`/update-all-food/${_id}`, updatedInfo)
+            .then((res) => {
+              if (res.data?.acknowledged) {
+                navigate("/user/cart");
+              }
+            })
+            .catch((er) => toast.error(er.message));
+        }
+      })
+      .catch((er) => toast.error(er.message));
+  };
 
   const handelQuantity = (e) => {
     const foodQuantity = e.target.value;
@@ -83,7 +114,7 @@ const FoodPurchase = () => {
               <span className="loading loading-spinner loading-md text-white font-bold"></span>
             )}
           </h3>
-          <form className="card-body">
+          <form onSubmit={handelOrderSubmit} className="card-body">
             <div className="form-control">
               <label className="label">
                 <span className="label-text text-white text-xl md:text-3xl font-bold">
@@ -141,7 +172,7 @@ const FoodPurchase = () => {
                     type="text"
                     name="user"
                     className="input input-bordered w-full pe-14"
-                    value={userName}
+                    value={user?.displayName}
                     readOnly
                   />
                 </div>
@@ -157,7 +188,7 @@ const FoodPurchase = () => {
                     type="email"
                     name="email"
                     className="input input-bordered w-full pe-14"
-                    value={userEmail}
+                    value={user?.email}
                     readOnly
                   />
                 </div>
@@ -172,7 +203,7 @@ const FoodPurchase = () => {
               <div className="relative">
                 <input
                   type="text"
-                  name="date"
+                  name="orderDate"
                   className="input input-bordered w-full pe-14"
                   defaultValue={currentDate}
                   readOnly
