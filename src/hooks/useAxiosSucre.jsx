@@ -16,7 +16,7 @@ const useAxiosSucre = () => {
     if (mount) {
       url.interceptors.response.use(
         (response) => {
-          console.log("form res of itercept");
+          // console.log("form res of itercept");
           return response;
         },
         (error) => {
@@ -24,21 +24,18 @@ const useAxiosSucre = () => {
             error?.response?.status === 401 ||
             error?.response?.status === 403
           ) {
-            console.log("error from axios");
+            // console.log("error from axios");
             logoutUser()
               .then(() => {
                 console.log("error from logout");
                 url
                   .post("/logout", {})
-                  .then((res) => {
+                  .then(() => {
                     if (error?.response?.status === 401) {
                       return toast.error("Access denied, please login.");
                     }
                     if (error?.response?.status === 403) {
                       return toast.error("Forbidden Access.");
-                    }
-                    if (res.data?.success) {
-                      toast.error("Please login!");
                     }
                   })
                   .catch((er) => toast.error(er.message));
