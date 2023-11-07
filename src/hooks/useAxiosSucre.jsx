@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { AuthContext } from "../providers/AuthProvider";
 
 const url = axios.create({
-  baseURL: "http://localhost:5000/api/v1",
+  baseURL: "https://la-server.vercel.app/api/v1/",
   withCredentials: true,
 });
 
