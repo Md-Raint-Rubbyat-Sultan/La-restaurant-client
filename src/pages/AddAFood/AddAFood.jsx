@@ -1,38 +1,28 @@
-import { useNavigate, useParams } from "react-router-dom";
-import useAxiosSucre from "../../hooks/useAxiosSucre";
-import { useQuery } from "@tanstack/react-query";
-import Spinner from "../../components/Spinner/Spinner";
-import { toast } from "react-hot-toast";
-import HelmetTitle from "../../components/HelmeteTitle/HelmeteTitle";
 import { useContext } from "react";
+import HelmetTitle from "../../components/HelmeteTitle/HelmeteTitle";
 import { AuthContext } from "../../providers/AuthProvider";
+import { toast } from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
+import useAxiosSucre from "../../hooks/useAxiosSucre";
 
-const MyAddedFoodUpdate = () => {
-  const { isLoading } = useContext(AuthContext);
-  const id = useParams();
+const AddAFood = () => {
+  const { user, isLoading } = useContext(AuthContext);
   const url = useAxiosSucre();
-  const navigate = useNavigate();
 
-  const {
-    isPending,
-    isError,
-    error,
-    data: foodDetails,
-  } = useQuery({
-    queryKey: ["single-food"],
-    queryFn: () => url.get(`/single-food/${id?.id}`).then((res) => res.data),
+  const { mutate } = useMutation({
+    mutationKey: [],
+    mutationFn: (info) =>
+      url
+        .post("/add-a-food", info)
+        .then((res) => {
+          if (res.data?.acknowledged) {
+            toast.success("Food Added!");
+          }
+        })
+        .catch((er) => toast.error(er.message)),
   });
 
-  if (isPending) return <Spinner />;
-
-  if (isError) return toast.error(error.message);
-
-  const { _id, category, description, img, name, origin, quantity, price } =
-    foodDetails;
-
-  //   console.log(foodDetails);
-
-  const handelUpdateFood = (e) => {
+  const handelAddFood = (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
@@ -42,14 +32,17 @@ const MyAddedFoodUpdate = () => {
     const quantity = parseInt(form.quantity.value);
     const photo = form.photo.value;
     const description = form.description.value;
-    const updates = {
+    const foodInfo = {
       name,
       category,
       origin,
       price,
       quantity,
-      photo,
+      img: photo,
       description,
+      orderCount: 0,
+      userName: user?.displayName,
+      userEmail: user?.email,
     };
 
     //quantity validate
@@ -65,20 +58,12 @@ const MyAddedFoodUpdate = () => {
     if (price < 0) return toast.error("Quantity can not less than 0.");
     // console.log(updates);
 
-    url
-      .put(`/user/update-added-food/${_id}`, updates)
-      .then((res) => {
-        if (res.data?.acknowledged) {
-          toast.success("Update Successful!");
-          navigate("/user/added-foods", { replace: true });
-        }
-      })
-      .catch((er) => toast.error(er.message));
+    mutate(foodInfo);
+    form.reset();
   };
-
   return (
     <div>
-      <HelmetTitle title="La | Update" />
+      <HelmetTitle title="La | Add Food" />
       <div
         style={{
           backgroundImage:
@@ -90,12 +75,12 @@ const MyAddedFoodUpdate = () => {
       >
         <div className="w-11/12 md:w-full md:max-w-2xl shadow-2xl border-2 backdrop-blur-md  border-gray-300 rounded-lg">
           <h3 className="text-center text-5xl text-white font-bold mt-6">
-            Update Food{" "}
+            Add Food{" "}
             {isLoading && (
               <span className="loading loading-spinner loading-md text-white font-bold"></span>
             )}
           </h3>
-          <form onSubmit={handelUpdateFood} className="card-body">
+          <form onSubmit={handelAddFood} className="card-body">
             <div className="form-control">
               <label className="label">
                 <span className="label-text text-white text-xl md:text-3xl font-bold">
@@ -105,7 +90,6 @@ const MyAddedFoodUpdate = () => {
               <input
                 type="text"
                 name="name"
-                defaultValue={name}
                 className="input input-bordered"
                 required
               />
@@ -121,7 +105,6 @@ const MyAddedFoodUpdate = () => {
                   <input
                     type="text"
                     name="category"
-                    defaultValue={category}
                     className="input input-bordered w-full"
                     required
                   />
@@ -137,7 +120,6 @@ const MyAddedFoodUpdate = () => {
                   <input
                     type="text"
                     name="origin"
-                    defaultValue={origin}
                     className="input input-bordered w-full"
                     required
                   />
@@ -155,7 +137,6 @@ const MyAddedFoodUpdate = () => {
                   type="text"
                   name="price"
                   className="input input-bordered"
-                  defaultValue={price}
                   required
                 />
               </div>
@@ -169,7 +150,6 @@ const MyAddedFoodUpdate = () => {
                   type="text"
                   name="quantity"
                   className="input input-bordered"
-                  defaultValue={quantity}
                   required
                 />
               </div>
@@ -184,7 +164,6 @@ const MyAddedFoodUpdate = () => {
                 <input
                   type="text"
                   name="photo"
-                  defaultValue={img}
                   className="input input-bordered w-full"
                   required
                 />
@@ -200,7 +179,6 @@ const MyAddedFoodUpdate = () => {
                 <textarea
                   type="text"
                   name="description"
-                  defaultValue={description}
                   className="textarea textarea-bordered w-full h-40"
                   required
                 />
@@ -218,4 +196,4 @@ const MyAddedFoodUpdate = () => {
   );
 };
 
-export default MyAddedFoodUpdate;
+export default AddAFood;

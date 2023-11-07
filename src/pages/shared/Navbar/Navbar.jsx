@@ -88,7 +88,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <NavLink
-                    to={"user/added-food"}
+                    to={"user/add-a-food"}
                     className={({ isActive }) => (isActive ? "underline" : "")}
                   >
                     Add A Food

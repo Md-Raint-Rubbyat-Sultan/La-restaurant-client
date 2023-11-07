@@ -75,15 +75,21 @@ const MyAddedFoods = () => {
       <h2 className="text-4xl font-semibold text-center">
         Food added by {user?.displayName && user.displayName}
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
-        {foodUserAdd?.map((addedFood) => (
-          <MyAddedFoodCards
-            key={addedFood?._id}
-            addedFood={addedFood}
-            handelFoodDelete={handelFoodDelete}
-          />
-        ))}
-      </div>
+      {foodUserAdd.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
+          {foodUserAdd?.map((addedFood) => (
+            <MyAddedFoodCards
+              key={addedFood?._id}
+              addedFood={addedFood}
+              handelFoodDelete={handelFoodDelete}
+            />
+          ))}
+        </div>
+      ) : (
+        <h3 className="text-3xl font-medium text-center h-screen">
+          No Food is Added By You!
+        </h3>
+      )}
       <div className="flex justify-center items-center flex-wrap gap-5">
         <button
           onClick={() => setCurrentPage((prev) => prev - 1)}
