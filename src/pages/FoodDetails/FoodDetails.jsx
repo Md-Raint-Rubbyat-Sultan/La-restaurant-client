@@ -44,6 +44,7 @@ const FoodDetails = () => {
   const handelOrder = () => {
     if (user?.email === userEmail)
       return toast.error("You can't order your own product!");
+    if (quantity <= 0) return toast.error("Sorry! Not available.");
     navigate(`/food-orders/${_id}`);
   };
 

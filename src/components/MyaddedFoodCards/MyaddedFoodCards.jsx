@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const MyAddedFoodCards = ({ addedFood, handelFoodDelete }) => {
   const { _id, name, category, img, price, quantity } = addedFood;
@@ -14,7 +15,9 @@ const MyAddedFoodCards = ({ addedFood, handelFoodDelete }) => {
         <p>Price: ${price}</p>
         <p>Quantity: {quantity}</p>
         <div className="card-actions justify-center">
-          <button className="btn-card mt-10 px-6 py-2">Update</button>
+          <Link to={`/user/added-foods/update/${_id}`}>
+            <button className="btn-card mt-10 px-6 py-2">Update</button>
+          </Link>
           <button
             onClick={() => handelFoodDelete(_id)}
             className="btn-card mt-10 px-6 py-2"

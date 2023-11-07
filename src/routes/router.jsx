@@ -11,6 +11,7 @@ import Blog from "../pages/Blogs/Blog";
 import FoodDetails from "../pages/FoodDetails/FoodDetails";
 import FoodPurchase from "../pages/FoodPurchase/FoodPurchase";
 import MyCart from "../pages/MyCart/MyCart";
+import MyAddedFoodUpdate from "../pages/myAddedFoods/MyAddedFoodUpdate";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,14 @@ const router = createBrowserRouter([
         element: (
           <PrivetRoute>
             <MyAddedFoods />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "user/added-foods/update/:id",
+        element: (
+          <PrivetRoute>
+            <MyAddedFoodUpdate />
           </PrivetRoute>
         ),
       },
