@@ -24,9 +24,9 @@ const Login = () => {
     console.log(email, password);
 
     loginUser(email, password)
-      .then(() => {
+      .then((res) => {
         url
-          .post("/jwt", { name, email })
+          .post("/jwt", { name: res?.displayName, email })
           .then((response) => {
             if (response.data?.success) {
               toast.success("Login Successful!");
