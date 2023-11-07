@@ -7,6 +7,7 @@ import Register from "../pages/Register/Register";
 import AllFoods from "../pages/allFoods/allFoods";
 import MyAddedFoods from "../pages/myAddedFoods/MyAddedFoods";
 import PrivetRoute from "./PrivetRoute";
+import Blog from "../pages/Blogs/Blog";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "blogs",
+        element: <Blog />,
       },
       {
         path: "all-foods",
