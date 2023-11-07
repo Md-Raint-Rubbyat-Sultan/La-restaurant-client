@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const AllFoodsCard = ({ food }) => {
   //   console.log(food);
-  const { name, category, img, price, quantity } = food;
+  const { _id, name, category, img, price, quantity } = food;
 
   return (
     <div className="overflow-hidden bg-base-100 shadow-xl border-2 border-gray-300 rounded-lg">
@@ -15,7 +16,9 @@ const AllFoodsCard = ({ food }) => {
         <p>Price: ${price}</p>
         <p>Quantity: {quantity}</p>
         <div className="card-actions justify-center">
-          <button className="btn-card mt-10 px-6 py-2">Details</button>
+          <Link to={`/details/${_id}`}>
+            <button className="btn-card mt-10 px-6 py-2">Details</button>
+          </Link>
         </div>
       </div>
     </div>

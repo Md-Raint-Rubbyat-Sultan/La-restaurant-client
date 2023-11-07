@@ -21,7 +21,9 @@ const MyAddedFoods = () => {
     queryKey: ["addedFoods", currentPage],
     queryFn: () =>
       url
-        .get(`user/added-foods?email=${user?.email}&page=${currentPage}&size=9`)
+        .get(
+          `/user/added-foods?email=${user?.email}&page=${currentPage}&size=9`
+        )
         .then((res) => res.data),
   });
 

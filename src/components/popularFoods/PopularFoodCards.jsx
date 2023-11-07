@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const PopularFoodCards = ({ food }) => {
-  const { name, category, img, price } = food;
+  const { _id, name, category, img, price } = food;
   return (
     <div className="overflow-hidden bg-base-100 shadow-xl border-2 border-gray-300 rounded-lg">
       <figure>
@@ -12,7 +13,9 @@ const PopularFoodCards = ({ food }) => {
         <p>Category: {category}</p>
         <p>Price: ${price}</p>
         <div className="card-actions justify-center">
-          <button className="btn-card mt-10 px-6 py-2">Details</button>
+          <Link to={`/details/${_id}`}>
+            <button className="btn-card mt-10 px-6 py-2">Details</button>
+          </Link>
         </div>
       </div>
     </div>
