@@ -1,11 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxiosSucre from "../../hooks/useAxiosSucre";
 import Spinner from "../../components/Spinner/Spinner";
 import { toast } from "react-hot-toast";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
+import HelmetTitle from "../../components/HelmeteTitle/HelmeteTitle";
 
 const FoodDetails = () => {
+  const { user } = useContext(AuthContext);
   const id = useParams();
+  const navigate = useNavigate();
   const url = useAxiosSucre();
 
   const {
@@ -22,7 +27,7 @@ const FoodDetails = () => {
 
   if (isError) return toast.error(error.message);
 
-  console.log(foodDetails);
+  // console.log(foodDetails);
   const {
     _id,
     category,
@@ -34,11 +39,18 @@ const FoodDetails = () => {
     price,
     userEmail,
     userName,
-    orderCount,
   } = foodDetails;
+
+  const handelOrder = () => {
+    if (user?.email === userEmail)
+      return toast.error("You can't order your own product!");
+    navigate(`/food-orders/${_id}`);
+    toast.success("ordered");
+  };
 
   return (
     <div className="container mx-auto px-4 xl:px-0 space-y-12 mb-12">
+      <HelmetTitle title="La | Details" />
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-12 md:gap-6">
         <figure className="md:col-span-2 lg:col-span-3">
           <img
@@ -66,9 +78,9 @@ const FoodDetails = () => {
               <span className="font-semibold">Price:</span> ${price}
             </p>
             <div>
-              <Link>
-                <button className="btn-banner px-4 py-2">Order Now</button>
-              </Link>
+              <button onClick={handelOrder} className="btn-banner px-4 py-2">
+                Order Now
+              </button>
             </div>
           </div>
         </div>
