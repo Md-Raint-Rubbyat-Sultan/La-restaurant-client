@@ -1,6 +1,9 @@
+import HelmetTitle from "../../components/HelmeteTitle/HelmeteTitle";
+
 const Blog = () => {
   return (
     <div className="container mx-auto space-y-16 mb-16 px-4 xl:px-0">
+      <HelmetTitle title="La | blogs" />
       <div className="space-y-5">
         <h1 className="text-4xl text-slate-800">
           <span className="font-semibold">Question:</span> What is one way data
