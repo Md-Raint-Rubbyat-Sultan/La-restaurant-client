@@ -4,10 +4,12 @@ import { AuthContext } from "../../providers/AuthProvider";
 import { toast } from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import useAxiosSucre from "../../hooks/useAxiosSucre";
+import { useNavigate } from "react-router-dom";
 
 const AddAFood = () => {
   const { user, isLoading } = useContext(AuthContext);
   const url = useAxiosSucre();
+  const navigate = useNavigate();
 
   const { mutate } = useMutation({
     mutationKey: [],
@@ -60,6 +62,7 @@ const AddAFood = () => {
 
     mutate(foodInfo);
     form.reset();
+    navigate("/all-foods");
   };
   return (
     <div>
