@@ -3,6 +3,7 @@ import useAxiosSucre from "../../hooks/useAxiosSucre";
 import Spinner from "../Spinner/Spinner";
 import { toast } from "react-hot-toast";
 import PopularFoodCards from "./PopularFoodCards";
+import { Link } from "react-router-dom";
 
 const PopularFoods = () => {
   const url = useAxiosSucre();
@@ -30,6 +31,11 @@ const PopularFoods = () => {
         {foods?.map((food) => (
           <PopularFoodCards key={food?._id} food={food} />
         ))}
+      </div>
+      <div className="text-center">
+        <Link to={"/all-foods"}>
+          <button className="btn-banner px-6 py-4">See All</button>
+        </Link>
       </div>
     </div>
   );

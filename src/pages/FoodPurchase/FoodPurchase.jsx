@@ -74,6 +74,7 @@ const FoodPurchase = () => {
             .patch(`/update-all-food/${_id}`, updatedInfo)
             .then((res) => {
               if (res.data?.acknowledged) {
+                toast.success("Order Confirmed!");
                 navigate("/user/cart");
               }
             })
