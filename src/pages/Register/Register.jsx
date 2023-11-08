@@ -61,7 +61,7 @@ const Register = () => {
                       if (response.data?.success) {
                         toast.success("Register Successful!");
                         form.reset();
-                        navigate(location?.state || "/");
+                        navigate(location?.state || "/", { replace: true });
                       }
                     })
                     .catch((er) => toast.error(er.message));

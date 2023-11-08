@@ -31,7 +31,7 @@ const Login = () => {
             if (response.data?.success) {
               toast.success("Login Successful!");
               form.reset();
-              navigate(location?.state || "/");
+              navigate(location?.state || "/", { replace: true });
             }
           })
           .catch((er) => toast.error(er.message));
@@ -58,7 +58,7 @@ const Login = () => {
                 .then((response) => {
                   if (response.data?.success) {
                     toast.success("Login Successful!");
-                    navigate(location?.state || "/");
+                    navigate(location?.state || "/", { replace: true });
                   }
                 })
                 .catch((er) => toast.error(er.message));
