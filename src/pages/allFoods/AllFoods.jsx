@@ -10,6 +10,7 @@ const AllFoods = () => {
   const url = useAxiosSucre();
   const [currentPage, setCurrentPage] = useState(() => 0);
   const [perPage, setPerPage] = useState(() => 9);
+  const [search, setSearch] = useState(() => "");
 
   const {
     isPending,
@@ -17,10 +18,10 @@ const AllFoods = () => {
     error,
     data: foods,
   } = useQuery({
-    queryKey: ["all-foods", perPage, currentPage],
+    queryKey: ["all-foods", perPage, currentPage, search],
     queryFn: () =>
       url
-        .get(`/all-foods?page=${currentPage}&size=${perPage}`)
+        .get(`/all-foods?page=${currentPage}&size=${perPage}&search=${search}`)
         .then((res) => res.data),
   });
 
@@ -41,22 +42,36 @@ const AllFoods = () => {
     setCurrentPage(() => 0);
   };
 
+  const handelSearch = (e) => {
+    e.preventDefault();
+    const searchField = e.target.search.value;
+    // console.log(searchField);
+    setSearch(() => searchField);
+  };
+
   return (
     <div className="container mx-auto px-4 xl:px-0 space-y-12 mb-12">
       <HelmetTitle title="La | All-foods" />
       <div className="space-y-6">
-        <div className="flex items-center w-11/12 lg:w-3/4 mx-auto">
-          <input
-            className="input input-bordered rounded-r-none w-full"
-            placeholder="Search food by name"
-          />
-          <button className="btn-form py-2 px-6">Search</button>
+        <div>
+          <form
+            onSubmit={handelSearch}
+            className="flex items-center w-11/12 lg:w-3/4 mx-auto"
+          >
+            <input
+              name="search"
+              defaultValue={search}
+              className="input input-bordered rounded-r-none w-full"
+              placeholder="Search food by name"
+            />
+            <button type="submit" className="btn-banner py-2 px-6">
+              Search
+            </button>
+          </form>
         </div>
         <div className="flex justify-center items-center gap-6 w-11/12 lg:w-3/4 mx-auto">
           <select className="select select-bordered w-full max-w-xs">
-            <option disabled selected>
-              Filter
-            </option>
+            <option value="filter">Filter</option>
             <option value="heigh">Price Heigh to Low</option>
             <option value="low">Price Low to Heigh</option>
           </select>
