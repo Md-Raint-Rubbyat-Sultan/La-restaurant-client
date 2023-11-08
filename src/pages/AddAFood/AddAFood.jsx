@@ -91,6 +91,7 @@ const AddAFood = () => {
                 type="text"
                 name="name"
                 className="input input-bordered"
+                placeholder="Food Name"
                 required
               />
             </div>
@@ -106,6 +107,7 @@ const AddAFood = () => {
                     type="text"
                     name="category"
                     className="input input-bordered w-full"
+                    placeholder="Category"
                     required
                   />
                 </div>
@@ -121,6 +123,7 @@ const AddAFood = () => {
                     type="text"
                     name="origin"
                     className="input input-bordered w-full"
+                    placeholder="Origin"
                     required
                   />
                 </div>
@@ -137,6 +140,7 @@ const AddAFood = () => {
                   type="text"
                   name="price"
                   className="input input-bordered"
+                  placeholder="$ Price"
                   required
                 />
               </div>
@@ -150,6 +154,7 @@ const AddAFood = () => {
                   type="text"
                   name="quantity"
                   className="input input-bordered"
+                  placeholder="Quantity"
                   required
                 />
               </div>
@@ -165,6 +170,7 @@ const AddAFood = () => {
                   type="text"
                   name="photo"
                   className="input input-bordered w-full"
+                  placeholder="Photo URL"
                   required
                 />
               </div>
@@ -180,6 +186,7 @@ const AddAFood = () => {
                   type="text"
                   name="description"
                   className="textarea textarea-bordered w-full h-40"
+                  placeholder="Description"
                   required
                 />
               </div>
