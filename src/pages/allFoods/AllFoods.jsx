@@ -86,11 +86,17 @@ const AllFoods = () => {
           </select>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
-        {allFoods?.map((food) => (
-          <AllFoodsCard key={food?._id} food={food} />
-        ))}
-      </div>
+      {allFoods.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
+          {allFoods?.map((food) => (
+            <AllFoodsCard key={food?._id} food={food} />
+          ))}
+        </div>
+      ) : (
+        <h3 className="text-3xl font-medium text-center h-screen">
+          No Food Found!
+        </h3>
+      )}
       <div className="flex justify-center items-center flex-wrap gap-5">
         <button
           onClick={() => setCurrentPage((prev) => prev - 1)}
