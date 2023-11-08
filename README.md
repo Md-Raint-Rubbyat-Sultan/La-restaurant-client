@@ -1,8 +1,15 @@
-# React + Vite
+# La Restaurant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Features:
 
-Currently, two official plugins are available:
+- A full stack project
+- Used Tanstack Query to get and post data
+- Used Axios instead of regular fetch
+- Used interceptor to verify user
+- User get verified with JWT token given from backend
+- Pagination is also a important feature
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Foods are available here:
+
+- [La Restaurant || Site Link](https://restaurant-app-6cba8.web.app/)
+- [La Restaurant || Server Link](https://la-server.vercel.app/api/v1/all-foods)
