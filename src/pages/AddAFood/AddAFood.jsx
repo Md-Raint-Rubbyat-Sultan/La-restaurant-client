@@ -62,7 +62,7 @@ const AddAFood = () => {
 
     mutate(foodInfo);
     form.reset();
-    navigate("/user/added-foods");
+    navigate("/all-foods");
   };
   return (
     <div>
