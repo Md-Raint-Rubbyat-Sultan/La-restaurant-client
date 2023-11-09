@@ -45,18 +45,22 @@ const Login = () => {
   const handelGoogleLogin = () => {
     loginWithGoogle()
       .then((res) => {
+        console.log(res);
         url
           .post("/add-a-user", {
-            userName: res?.displayName,
-            userEmail: res?.email,
-            userPhotoUrl: res?.photoURL,
+            userName: res?.user?.displayName,
+            userEmail: res?.user?.email,
+            userPhotoUrl: res?.user?.photoURL,
           })
-          .then((res) => {
-            if (res.data?.acknowledged) {
+          .then((response) => {
+            if (response.data?.acknowledged) {
               url
-                .post("/jwt", { name: res?.displayName, email: res?.email })
-                .then((response) => {
-                  if (response.data?.success) {
+                .post("/jwt", {
+                  name: res?.user?.displayName,
+                  email: res?.user?.email,
+                })
+                .then((response1) => {
+                  if (response1.data?.success) {
                     toast.success("Login Successful!");
                     navigate(location?.state || "/", { replace: true });
                   }
