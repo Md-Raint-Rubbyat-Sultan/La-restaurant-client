@@ -28,7 +28,7 @@ const MyCart = () => {
 
   if (isError) return toast.error(error.message);
 
-  const { orders, extra } = cartData;
+  const { orders } = cartData;
   // console.log(extra);
 
   const handelCartFoodDelete = (id) => {
@@ -47,7 +47,7 @@ const MyCart = () => {
           .delete(`/user/delete-a-cart-food/${id}`)
           .then((res) => {
             // console.log(res);
-            if (res.data?.acknowledged) {
+            if (res.data?.deletedCount > 0) {
               Swal.fire({
                 title: "Deleted!",
                 text: "Your file has been deleted.",
@@ -67,12 +67,10 @@ const MyCart = () => {
       <h1 className="text-5xl text-center font-bold">Order List</h1>
       {orders.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {orders?.map((order, idx) => (
+          {orders?.map((order) => (
             <CartCards
               key={order?._id}
               order={order}
-              idx={idx}
-              extra={extra}
               handelCartFoodDelete={handelCartFoodDelete}
             />
           ))}

@@ -39,7 +39,7 @@ const FoodPurchase = () => {
 
   //   console.log(foodDetails);
 
-  const { _id, name, quantity, price, orderCount } = foodDetails;
+  const { _id, name, quantity, price, orderCount, img, category } = foodDetails;
 
   const handelOrderSubmit = (e) => {
     e.preventDefault();
@@ -50,11 +50,14 @@ const FoodPurchase = () => {
 
     // post info
     const orderInfo = {
-      orderId: _id,
       user: userName,
       email: user?.email,
       addedQuantity,
       addedTime,
+      name,
+      category,
+      img,
+      price,
     };
 
     // update info
