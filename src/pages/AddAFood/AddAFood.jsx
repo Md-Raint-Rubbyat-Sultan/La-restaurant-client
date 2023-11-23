@@ -196,7 +196,7 @@ const AddAFood = () => {
             </div>
             <div className="form-control mt-6">
               <button type="submit" className="btn-form py-2">
-                Update
+                Add
               </button>
             </div>
           </form>

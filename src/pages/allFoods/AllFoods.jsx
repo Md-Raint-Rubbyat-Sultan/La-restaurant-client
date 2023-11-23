@@ -11,6 +11,7 @@ const AllFoods = () => {
   const [currentPage, setCurrentPage] = useState(() => 0);
   const [perPage, setPerPage] = useState(() => 9);
   const [search, setSearch] = useState(() => "");
+  const [filter, setFilter] = useState(() => "default");
 
   const {
     isPending,
@@ -18,10 +19,12 @@ const AllFoods = () => {
     error,
     data: foods,
   } = useQuery({
-    queryKey: ["all-foods", perPage, currentPage, search],
+    queryKey: ["all-foods", perPage, currentPage, search, filter],
     queryFn: () =>
       url
-        .get(`/all-foods?page=${currentPage}&size=${perPage}&search=${search}`)
+        .get(
+          `/all-foods?page=${currentPage}&size=${perPage}&search=${search}&filter=${filter}`
+        )
         .then((res) => res.data),
   });
 
@@ -70,10 +73,16 @@ const AllFoods = () => {
           </form>
         </div>
         <div className="flex justify-center items-center gap-6 w-11/12 lg:w-3/4 mx-auto">
-          <select className="select select-bordered w-full max-w-xs">
-            <option value="filter">Filter</option>
-            <option value="heigh">Price Heigh to Low</option>
-            <option value="low">Price Low to Heigh</option>
+          <select
+            value={filter}
+            onChange={(e) => setFilter(() => e.target.value)}
+            className="select select-bordered w-full max-w-xs"
+          >
+            <option value="default" disabled>
+              Default
+            </option>
+            <option value="acc">Price Low to Heigh</option>
+            <option value="desc">Price Heigh to Low</option>
           </select>
           <select
             defaultValue={perPage}

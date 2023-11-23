@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { AuthContext } from "../providers/AuthProvider";
 
 const url = axios.create({
-  baseURL: "https://la-server.vercel.app/api/v1/",
+  baseURL: import.meta.env.VITE_LIVE_URL,
   withCredentials: true,
 });
 
